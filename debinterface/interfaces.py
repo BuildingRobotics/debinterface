@@ -2,6 +2,10 @@
 
 # A class representing the contents of /etc/network/interfaces
 
+import os
+import os.path
+from string import Template
+
 from . import constants
 
 from .adapter import *
@@ -101,6 +105,8 @@ class interfaces:
                 if adapter.export()['name'] == entry:
                     adapter.setHotplug(True)
 
+        interfaces.close()
+
         return adapters
 
     # Insert a networkAdapter before the given index or at the end of the list.
@@ -117,13 +123,11 @@ class interfaces:
 
     def writeInterfaces(self):
 
-        # Back up the old interfaces file.
-        import subprocess
-
-        subprocess.call(["mv", constants.INTERFACES, constants.BACKUP])
+        os.rename(os.path.abspath(constants.INTERFACES), 
+                  os.path.abspath(constants.BACKUP))
 
         # Prepare to write the new interfaces file.
-        interfaces = open(constants.INTERFACES, "a")
+        interfaces = open(constants.INTERFACES, "w")
 
         # Loop through the provided networkAdaprers and write the new file.
         for adapter in self.adapters:
@@ -187,14 +191,15 @@ class interfaces:
                     # Keep going if a field isn't provided.
                     except KeyError:
                         pass
+            interfaces.write("\n")
+
+        interfaces.close()
 
     # Set up the interfaces object.
     def __init__(self):
         self.adapters = self.parseInterfaces()
 
         # Define templetes for blocks used in /etc/network/interfaces.
-        from string import Template
-
         self.AUTO = Template('auto $name\n')
         self.HOTPLUG = Template('allow-hotplug $name\n')
         self.IFACE = Template('iface $name $inet $source\n')

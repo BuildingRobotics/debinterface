@@ -32,11 +32,23 @@ class networkAdapter:
         else:
             pass
 
+    def unsetAddress(self):
+        try:
+            del self.ifAttributes['address']
+        except KeyError:
+            pass
+
     # Set the netmask of an interface.
     def setNetmask(self, m):
         if self.validateIP(m) == 1:
             self.ifAttributes['netmask'] = m
         else:
+            pass
+
+    def unsetNetmask(self):
+        try:
+            del self.ifAttributes['netmask']
+        except KeyError:
             pass
 
     # Set the default gateway of an interface.
@@ -46,11 +58,23 @@ class networkAdapter:
         else:
             pass
 
+    def unsetGateway(self):
+        try:
+            del self.ifAttributes['gateway']
+        except KeyError:
+            pass
+
     # Set the broadcast address of an interface.
     def setBroadcast(self, b):
         if self.validateIP(b) == 1:
             self.ifAttributes['broadcast'] = b
         else:
+            pass
+
+    def unsetBroadcast(self, b):
+        try:
+            del self.ifAttributes['broadcast']
+        except KeyError:
             pass
 
     # Set the network identifier of an interface.
