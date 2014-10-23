@@ -25,6 +25,9 @@ class networkAdapter:
     def setAddressSource(self, s):
         self.ifAttributes['source'] = s
 
+    def setMetric(self, m):
+        self.ifAttributes['metric'] = m
+
     # Set the ipaddress of an interface.
     def setAddress(self, a):
         if self.validateIP(a) == 1:
@@ -176,6 +179,8 @@ class networkAdapter:
                     self.setInet(options[key])
                 elif key == 'source':
                     self.setAddressSource(options[key])
+                elif key == 'metric':
+                    self.setMetric(options[key])
                 elif key == 'address':
                     self.setAddress(options[key])
                 elif key == 'netmask':

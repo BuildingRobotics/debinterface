@@ -63,6 +63,8 @@ class interfaces:
                             adapters[context].setBroadcast(sline[1])
                         if sline[0] == 'network':
                             adapters[context].setNetwork(sline[1])
+                        if sline[0] == 'metric':
+                            adapters[context].setMetric(sline[1])
                         if sline[0].startswith('bridge') == True:
                             opt = sline[0].split('_')
                             sline.pop(0)
@@ -205,6 +207,6 @@ class interfaces:
         self.IFACE = Template('iface $name $inet $source\n')
         self.CMD = Template('\t$varient $value\n')
 
-        self.addressFields = ['address', 'network', 'netmask', 'broadcast', 'gateway']
+        self.addressFields = ['address', 'network', 'netmask', 'broadcast', 'gateway', 'metric']
         self.prepFields = ['pre-up', 'up', 'down', 'post-down']
         self.bridgeFields = ['ports', 'fd', 'hello', 'maxage', 'stp']
