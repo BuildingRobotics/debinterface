@@ -2,7 +2,7 @@
 
 # A class representing the contents of /etc/network/interfaces
 
-import os
+import shutil
 import os.path
 from string import Template
 
@@ -125,8 +125,8 @@ class interfaces:
 
     def writeInterfaces(self):
 
-        os.rename(os.path.abspath(constants.INTERFACES), 
-                  os.path.abspath(constants.BACKUP))
+        shutil.move(os.path.abspath(constants.INTERFACES), 
+                    os.path.abspath(constants.BACKUP))
 
         # Prepare to write the new interfaces file.
         interfaces = open(constants.INTERFACES, "w")
