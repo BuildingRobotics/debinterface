@@ -125,7 +125,7 @@ class interfaces:
 
     def writeInterfaces(self):
 
-        shutil.move(os.path.abspath(constants.INTERFACES), 
+        shutil.copy(os.path.abspath(constants.INTERFACES), 
                     os.path.abspath(constants.BACKUP))
 
         # Prepare to write the new interfaces file.
